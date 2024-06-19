@@ -1,0 +1,4 @@
+*.so
+.idea
+.DS_Store
+

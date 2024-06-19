@@ -1,0 +1,19 @@
+services:
+
+  proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.envoy
+      target: envoy-go
+      args:
+        ENVOY_VARIANT: contrib-v1.30.2
+    depends_on:
+      helloworld_service:
+        condition: service_healthy
+    ports:
+    - "${PORT_PROXY:-10000}:10000"
+
+  helloworld_service:
+    build:
+      context: ./testing
+      target: aiohttp-hello-service
