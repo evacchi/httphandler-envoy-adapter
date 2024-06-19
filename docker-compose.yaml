@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.envoy
       target: envoy-go
       args:
-        ENVOY_VARIANT: contrib-v1.30.2
+        ENVOY_VARIANT: contrib-dev
     depends_on:
       helloworld_service:
         condition: service_healthy
