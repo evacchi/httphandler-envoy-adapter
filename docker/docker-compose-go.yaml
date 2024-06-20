@@ -1,0 +1,17 @@
+services:
+  go_plugin_compile:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.gobuild
+      target: golang-base
+    command: >
+      bash -c "
+      cd examples/${EXAMPLE:-simple}
+      && go build -o ${EXAMPLE:-simple}.so -buildmode=c-shared .
+      && cp ./${EXAMPLE:-simple}.so /output/plugin.so"
+    working_dir: /source
+    environment:
+    - GOFLAGS=-buildvcs=false
+    volumes:
+    - ..:/source
+    - ./lib:/output

@@ -1,0 +1,15 @@
+FROM golang:1.22.4-bookworm@sha256:aec47843e52fee4436bdd3ce931417fa980e9055658b5142140925eea3044bea as golang-base
+
+FROM golang-base as golang-echo
+ARG SERVICE_PORT=8080
+ENV SERVICE_PORT=$SERVICE_PORT
+
+RUN apt update && apt install netcat-traditional
+
+HEALTHCHECK \
+    --interval=1s \
+    --timeout=1s \
+    --start-period=3s \
+    --retries=6 \
+    CMD nc -zv localhost "$SERVICE_PORT"
+

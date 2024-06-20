@@ -1,0 +1,28 @@
+services:
+
+  proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.envoy
+      target: envoy-go
+      args:
+        ENVOY_VARIANT: contrib-dev
+    depends_on:
+      echo-service:
+        condition: service_healthy
+    ports:
+    - "${PORT_PROXY:-10000}:10000"
+
+  echo-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.gobuild
+      target: golang-echo
+    command: >
+      bash -c "
+      cd testing
+      && go run ."
+    working_dir: /source
+    volumes:
+      - .:/source
+      - ./lib:/output

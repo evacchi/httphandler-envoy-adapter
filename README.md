@@ -4,11 +4,11 @@ Example local development environment.
 
 ## Build
 
-    docker compose -f docker-compose-go.yaml run --rm go_plugin_compile
+    docker compose -f docker/docker-compose-go.yaml run --rm go_plugin_compile
 
 ## Run
 
-    docker compose up --build -d
+    docker compose -f docker/docker-compose.yaml up --build -d
 
 Example:
 
